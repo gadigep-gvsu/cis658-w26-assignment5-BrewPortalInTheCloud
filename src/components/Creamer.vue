@@ -1,17 +1,19 @@
 <template>
-  <div class="froth">
-    <div
-      v-for=" in 5"
-      class="foam"
-      :style="{ backgroundColor: beverageStore.currentCreamer?.color }"
-    ></div>
+  <div
+    v-if="displayCreamer.name !== 'No Cream'"
+    class="froth"
+    :style="{ backgroundColor: displayCreamer.color }"
+  >
+    <div v-for="n in 5" :key="n" class="foam"></div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useBeverageStore } from "../stores/beverageStore";
 
-const beverageStore = useBeverageStore();
+const store = useBeverageStore();
+const { displayCreamer } = storeToRefs(store);
 </script>
 <style lang="scss" scoped>
 .froth {
@@ -20,7 +22,6 @@ const beverageStore = useBeverageStore();
   position: relative;
   height: 20%;
   width: 100%;
-  background-color: #c6c6c6;
   animation: pour-tea 2s 2s forwards;
 }
 .foam {
